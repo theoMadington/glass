@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-const basketOpen = '/mouth.png'
-const basketClosed = '/mouth-closed.png'
+const base = import.meta.env.BASE_URL
+
+const basketOpen = `${base}mouth.png`
+const basketClosed = `${base}mouth-closed.png`
 const basketImg = ref(basketOpen)
+
 const glassImages = [
-  '/glass.png',
-  '/glass2.png',
-  '/glass3.png'
+  `${base}glass.png`,
+  `${base}glass2.png`,
+  `${base}glass3.png`
 ]
 const glasses = ref<{ id: number; x: number; y: number; img: string }[]>([])
 const score = ref(0)
