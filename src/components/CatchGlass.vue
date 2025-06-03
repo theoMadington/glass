@@ -92,8 +92,30 @@ function tryAgain() {
   gameState.value = 'start'
 }
 
+function handleTouch(event: TouchEvent) {
+  if (gameState.value !== 'playing') return
+  const touch = event.touches[0]
+  if (!touch) return
+  // Get the bounding rect of the game area
+  const gameArea = (event.target as HTMLElement).closest('.game-area') as HTMLElement
+  if (!gameArea) return
+  const rect = gameArea.getBoundingClientRect()
+  // Calculate x relative to game area
+  let x = touch.clientX - rect.left
+  // Center the basket on the finger
+  x = x - basketWidth / 2
+  // Clamp within bounds
+  basketX.value = Math.max(0, Math.min(400 - basketWidth, x))
+}
+
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
+  // Add touch event listeners to the game area
+  const gameArea = document.querySelector('.game-area')
+  if (gameArea) {
+    gameArea.addEventListener('touchstart', handleTouch)
+    gameArea.addEventListener('touchmove', handleTouch)
+  }
 })
 
 onUnmounted(() => {
@@ -101,6 +123,12 @@ onUnmounted(() => {
   clearInterval(gameInterval)
   clearInterval(timerInterval)
   clearTimeout(mouthTimeout)
+  // Remove touch event listeners
+  const gameArea = document.querySelector('.game-area')
+  if (gameArea) {
+    gameArea.removeEventListener('touchstart', handleTouch)
+    gameArea.removeEventListener('touchmove', handleTouch)
+  }
 })
 </script>
 
