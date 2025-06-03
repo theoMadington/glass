@@ -56,8 +56,6 @@ function moveGlasses() {
   glasses.value = glasses.value.filter(g => g.y < 400)
 }
 
-function missedCatch() {}
-
 function handleKeydown(e: KeyboardEvent) {
   if (gameState.value !== 'playing') return
   if (e.key === 'ArrowLeft') basketX.value = Math.max(0, basketX.value - 20)
