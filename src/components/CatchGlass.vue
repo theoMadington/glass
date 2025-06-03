@@ -110,11 +110,10 @@ function handleTouch(event: TouchEvent) {
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
-  // Add touch event listeners to the game area
   const gameArea = document.querySelector('.game-area')
   if (gameArea) {
-    gameArea.addEventListener('touchstart', handleTouch)
-    gameArea.addEventListener('touchmove', handleTouch)
+    gameArea.addEventListener('touchstart', handleTouch as EventListener)
+    gameArea.addEventListener('touchmove', handleTouch as EventListener)
   }
 })
 
@@ -123,11 +122,10 @@ onUnmounted(() => {
   clearInterval(gameInterval)
   clearInterval(timerInterval)
   clearTimeout(mouthTimeout)
-  // Remove touch event listeners
   const gameArea = document.querySelector('.game-area')
   if (gameArea) {
-    gameArea.removeEventListener('touchstart', handleTouch)
-    gameArea.removeEventListener('touchmove', handleTouch)
+    gameArea.removeEventListener('touchstart', handleTouch as EventListener)
+    gameArea.removeEventListener('touchmove', handleTouch as EventListener)
   }
 })
 </script>
